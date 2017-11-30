@@ -10,7 +10,7 @@ import (
 
 // Report 交易保障.
 func Report(clt *core.Client, req map[string]string) (resp map[string]string, err error) {
-	return clt.PostXML(core.APIBaseURL()+"/payitil/report", req)
+	return clt.PostXML(core.APIBaseURL(clt.Sandbox())+"/payitil/report", req)
 }
 
 type ReportRequest struct {

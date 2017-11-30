@@ -1,8 +1,8 @@
 package oauth2
 
 import (
-	mpoauth2 "gopkg.in/chanxuehong/wechat.v2/mp/oauth2"
-	"gopkg.in/chanxuehong/wechat.v2/oauth2"
+	mpoauth2 "gopkg.in/skOak/wechat.v2/mp/oauth2"
+	"gopkg.in/skOak/wechat.v2/oauth2"
 )
 
 var _ oauth2.Endpoint = (*Endpoint)(nil)

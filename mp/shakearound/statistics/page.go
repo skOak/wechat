@@ -1,7 +1,7 @@
 package statistics
 
 import (
-	"gopkg.in/chanxuehong/wechat.v2/mp/core"
+	"gopkg.in/skOak/wechat.v2/mp/core"
 )
 
 // 以页面为维度的数据统计接口

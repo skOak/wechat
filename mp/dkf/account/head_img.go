@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"gopkg.in/chanxuehong/wechat.v2/mp/core"
+	"gopkg.in/skOak/wechat.v2/mp/core"
 )
 
 // UploadHeadImage 上传客服头像.

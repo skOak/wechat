@@ -6,10 +6,10 @@ import (
 	"log"
 	"net/http"
 
-	"gopkg.in/chanxuehong/wechat.v2/mp/core"
-	"gopkg.in/chanxuehong/wechat.v2/mp/menu"
-	"gopkg.in/chanxuehong/wechat.v2/mp/message/callback/request"
-	"gopkg.in/chanxuehong/wechat.v2/mp/message/callback/response"
+	"gopkg.in/skOak/wechat.v2/mp/core"
+	"gopkg.in/skOak/wechat.v2/mp/menu"
+	"gopkg.in/skOak/wechat.v2/mp/message/callback/request"
+	"gopkg.in/skOak/wechat.v2/mp/message/callback/response"
 )
 
 const (
@@ -89,8 +89,8 @@ package main
 import (
 	"fmt"
 
-	"gopkg.in/chanxuehong/wechat.v2/mp/base"
-	"gopkg.in/chanxuehong/wechat.v2/mp/core"
+	"gopkg.in/skOak/wechat.v2/mp/base"
+	"gopkg.in/skOak/wechat.v2/mp/core"
 )
 
 const (

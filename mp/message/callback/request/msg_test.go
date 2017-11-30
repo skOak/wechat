@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"gopkg.in/chanxuehong/wechat.v2/mp/core"
+	"gopkg.in/skOak/wechat.v2/mp/core"
 )
 
 func TestTextMessage(t *testing.T) {

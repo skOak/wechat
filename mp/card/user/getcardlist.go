@@ -1,8 +1,8 @@
 package user
 
 import (
-	"gopkg.in/chanxuehong/wechat.v2/mp/card/code"
-	"gopkg.in/chanxuehong/wechat.v2/mp/core"
+	"gopkg.in/skOak/wechat.v2/mp/card/code"
+	"gopkg.in/skOak/wechat.v2/mp/core"
 )
 
 // 获取用户已领取卡券接口

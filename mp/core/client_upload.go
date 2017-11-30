@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"net/url"
 
-	"gopkg.in/chanxuehong/wechat.v2/internal/debug/api"
-	"gopkg.in/chanxuehong/wechat.v2/internal/debug/api/retry"
-	"gopkg.in/chanxuehong/wechat.v2/util"
+	"gopkg.in/skOak/wechat.v2/internal/debug/api"
+	"gopkg.in/skOak/wechat.v2/internal/debug/api/retry"
+	"gopkg.in/skOak/wechat.v2/util"
 )
 
 type MultipartFormField struct {

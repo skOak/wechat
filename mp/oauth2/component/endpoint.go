@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/url"
 
-	"gopkg.in/chanxuehong/wechat.v2/oauth2"
+	"gopkg.in/skOak/wechat.v2/oauth2"
 )
 
 var _ oauth2.Endpoint = (*Endpoint)(nil)

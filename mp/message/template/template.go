@@ -1,7 +1,7 @@
 package template
 
 import (
-	"gopkg.in/chanxuehong/wechat.v2/mp/core"
+	"gopkg.in/skOak/wechat.v2/mp/core"
 )
 
 // 设置所属行业.

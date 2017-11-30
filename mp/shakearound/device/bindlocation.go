@@ -1,7 +1,7 @@
 package device
 
 import (
-	"gopkg.in/chanxuehong/wechat.v2/mp/core"
+	"gopkg.in/skOak/wechat.v2/mp/core"
 )
 
 // 配置设备与门店的关联关系

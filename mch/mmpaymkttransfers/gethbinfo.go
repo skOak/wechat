@@ -1,7 +1,7 @@
 package mmpaymkttransfers
 
 import (
-	"gopkg.in/chanxuehong/wechat.v2/mch/core"
+	"gopkg.in/skOak/wechat.v2/mch/core"
 )
 
 // 红包查询接口.

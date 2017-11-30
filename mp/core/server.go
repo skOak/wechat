@@ -19,8 +19,8 @@ import (
 
 	"github.com/chanxuehong/util/security"
 
-	"gopkg.in/chanxuehong/wechat.v2/internal/debug/callback"
-	"gopkg.in/chanxuehong/wechat.v2/internal/util"
+	"gopkg.in/skOak/wechat.v2/internal/debug/callback"
+	"gopkg.in/skOak/wechat.v2/internal/util"
 )
 
 // Server 用于处理微信服务器的回调请求, 并发安全!

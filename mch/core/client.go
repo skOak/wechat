@@ -16,7 +16,8 @@ import (
 )
 
 type Client struct {
-	sandbox bool
+	sandbox     bool
+	mockBaseURL string
 
 	appId  string
 	mchId  string
@@ -94,6 +95,7 @@ func NewSubMchClient(appId, mchId, apiKey string, subAppId, subMchId string, htt
 // PostXML 是微信支付通用请求方法.
 //  err == nil 表示 (return_code == "SUCCESS" && result_code == "SUCCESS").
 func (clt *Client) PostXML(url string, req map[string]string) (resp map[string]string, err error) {
+	url = clt.APIBaseURL() + url
 	if req["appid"] == "" {
 		req["appid"] = clt.appId
 	}

@@ -7,5 +7,5 @@ import (
 // 红包查询接口.
 //  NOTE: 请求需要双向证书
 func GetRedPackInfo(clt *core.Client, req map[string]string) (resp map[string]string, err error) {
-	return clt.PostXML(core.APIBaseURL(clt.Sandbox())+"/mmpaymkttransfers/gethbinfo", req)
+	return clt.PostXML("/mmpaymkttransfers/gethbinfo", req)
 }

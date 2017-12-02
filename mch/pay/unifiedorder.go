@@ -11,7 +11,7 @@ import (
 
 // UnifiedOrder 统一下单.
 func UnifiedOrder(clt *core.Client, req map[string]string) (resp map[string]string, err error) {
-	return clt.PostXML(core.APIBaseURL(clt.Sandbox())+"/pay/unifiedorder", req)
+	return clt.PostXML("/pay/unifiedorder", req)
 }
 
 type UnifiedOrderRequest struct {
@@ -42,21 +42,7 @@ type UnifiedOrderRequest struct {
 	SceneInfo  string    `xml:"scene_info"`  // 该字段用于上报支付的场景信息,针对H5支付有以下三种场景,请根据对应场景上报,H5支付不建议在APP端使用，针对场景1，2请接入APP支付，不然可能会出现兼容性问题
 }
 
-type UnifiedOrderResponse struct {
-	XMLName struct{} `xml:"xml" json:"-"`
-
-	// 必选返回
-	PrepayId  string `xml:"prepay_id"`  // 微信生成的预支付回话标识，用于后续接口调用中使用，该值有效期为2小时
-	TradeType string `xml:"trade_type"` // 调用接口提交的交易类型，取值如下：JSAPI，NATIVE，APP，详细说明见参数规定
-
-	// 下面字段都是可选返回的(详细见微信支付文档), 为空值表示没有返回, 程序逻辑里需要判断
-	DeviceInfo string `xml:"device_info"` // 调用接口提交的终端设备号。
-	CodeURL    string `xml:"code_url"`    // trade_type 为 NATIVE 时有返回，可将该参数值生成二维码展示出来进行扫码支付
-	MWebURL    string `xml:"mweb_url"`    // trade_type 为 MWEB 时有返回
-}
-
-// UnifiedOrder2 统一下单.
-func UnifiedOrder2(clt *core.Client, req *UnifiedOrderRequest) (resp *UnifiedOrderResponse, err error) {
+func (req *UnifiedOrderRequest) FieldsMap() map[string]string {
 	m1 := make(map[string]string, 24)
 	m1["body"] = req.Body
 	m1["out_trade_no"] = req.OutTradeNo
@@ -109,7 +95,25 @@ func UnifiedOrder2(clt *core.Client, req *UnifiedOrderRequest) (resp *UnifiedOrd
 		m1["scene_info"] = req.SceneInfo
 	}
 
-	m2, err := UnifiedOrder(clt, m1)
+	return m1
+}
+
+type UnifiedOrderResponse struct {
+	XMLName struct{} `xml:"xml" json:"-"`
+
+	// 必选返回
+	PrepayId  string `xml:"prepay_id"`  // 微信生成的预支付回话标识，用于后续接口调用中使用，该值有效期为2小时
+	TradeType string `xml:"trade_type"` // 调用接口提交的交易类型，取值如下：JSAPI，NATIVE，APP，详细说明见参数规定
+
+	// 下面字段都是可选返回的(详细见微信支付文档), 为空值表示没有返回, 程序逻辑里需要判断
+	DeviceInfo string `xml:"device_info"` // 调用接口提交的终端设备号。
+	CodeURL    string `xml:"code_url"`    // trade_type 为 NATIVE 时有返回，可将该参数值生成二维码展示出来进行扫码支付
+	MWebURL    string `xml:"mweb_url"`    // trade_type 为 MWEB 时有返回
+}
+
+// UnifiedOrder2 统一下单.
+func UnifiedOrder2(clt *core.Client, req *UnifiedOrderRequest) (resp *UnifiedOrderResponse, err error) {
+	m2, err := UnifiedOrder(clt, req.FieldsMap())
 	if err != nil {
 		return nil, err
 	}

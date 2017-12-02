@@ -7,7 +7,7 @@ import (
 
 // ShortURL 转换短链接.
 func ShortURL(clt *core.Client, req map[string]string) (resp map[string]string, err error) {
-	return clt.PostXML(core.APIBaseURL(clt.Sandbox())+"/tools/shorturl", req)
+	return clt.PostXML("/tools/shorturl", req)
 }
 
 type ShortURLRequest struct {

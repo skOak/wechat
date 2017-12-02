@@ -7,7 +7,7 @@ import (
 
 // AuthCodeToOpenId 授权码查询openid.
 func AuthCodeToOpenId(clt *core.Client, req map[string]string) (resp map[string]string, err error) {
-	return clt.PostXML(core.APIBaseURL(clt.Sandbox())+"/tools/authcodetoopenid", req)
+	return clt.PostXML("/tools/authcodetoopenid", req)
 }
 
 type AuthCodeToOpenIdRequest struct {

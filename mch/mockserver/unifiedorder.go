@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"time"
 
+	xmlutil "github.com/chanxuehong/util"
+
 	"gopkg.in/skOak/wechat.v2/mch/core"
 	"gopkg.in/skOak/wechat.v2/mch/pay"
 	"gopkg.in/skOak/wechat.v2/util"
@@ -22,6 +24,7 @@ type UnifiedOrderReq struct {
 
 // 字段解释参考：https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_7&index=3
 type PayResultNotify struct {
+	XMLName    string `xml:"xml"`
 	ReturnCode string `xml:"return_code,omitempty"`
 	ReturnMsg  string `xml:"return_msg,omitempty"`
 
@@ -52,12 +55,17 @@ type PayResultNotify struct {
 }
 
 func UnifiedOrder(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("UnifiedOrder received request from", r.RemoteAddr)
 	req := &UnifiedOrderReq{}
 	resp := make(map[string]string)
 	defer func() {
-		// omit marshal error
-		rb, _ := xml.Marshal(resp)
-		w.Write(rb)
+		fmt.Println("UnifiedOrder responsed:", resp)
+		bb := make([]byte, 0)
+		buf := bytes.NewBuffer(bb)
+		err := xmlutil.EncodeXMLFromMap(buf, resp, "xml")
+		//rb, err := xml.Marshal(resp)
+		fmt.Println("UnifiedOrder responsed xml:", buf.String(), err)
+		w.Write(buf.Bytes())
 	}()
 	err := xml.NewDecoder(r.Body).Decode(req)
 	if err != nil {
@@ -66,6 +74,7 @@ func UnifiedOrder(w http.ResponseWriter, r *http.Request) {
 		resp["return_msg"] = fmt.Sprintf("Decode Error:%v", err.Error())
 		return
 	}
+	fmt.Println("UnifiedOrder received request:", req)
 
 	fieldsMap := req.UnifiedOrderRequest.FieldsMap()
 	for k, v := range req.RequestCommon.FieldsMap() {
@@ -130,8 +139,12 @@ func UnifiedOrder(w http.ResponseWriter, r *http.Request) {
 		default:
 			notify.Sign = core.Sign2(util.StructFieldsMap(notify, "xml"), ApiKey, md5.New())
 		}
-		nb, _ := xml.Marshal(notify)
-		Notify(req.NotifyURL, "application/xml", bytes.NewBuffer(nb), 0)
+		nb, err := xml.Marshal(notify)
+		if err != nil {
+			panic(err.Error())
+		}
+		err = Notify(req.NotifyURL, "application/xml", bytes.NewBuffer(nb), 0)
+		fmt.Printf("UnifiedOrder notify (%v) to %v with err(%v)\n", string(nb), req.NotifyURL, err)
 	}()
 	return
 }

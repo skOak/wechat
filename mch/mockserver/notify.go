@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/xml"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"time"
@@ -13,7 +14,11 @@ type NotifyResp struct {
 	ReturnMsg  string `xml:"return_msg"`  // 返回信息，如非空，为错误原因：	签名失败	参数格式校验错误
 }
 
-func Notify(notifyUrl string, contentType string, body io.Reader, waitMS int64) error {
+func Notify(notifyUrl string, contentType string, body io.Reader, waitMS int64) (err error) {
+	fmt.Println("Notify to", notifyUrl)
+	defer func() {
+		fmt.Println("Notify finished with error:", err)
+	}()
 	if notifyUrl == "" {
 		return errors.New("invalid notify url")
 	}

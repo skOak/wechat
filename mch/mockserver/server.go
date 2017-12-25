@@ -12,11 +12,13 @@ import (
 var (
 	addr   string
 	ApiKey string
+    NotifyDelaySeconds int
 )
 
 func main() {
 	flag.StringVar(&addr, "addr", ":18080", "address the mock server running on")
 	flag.StringVar(&ApiKey, "apikey", "", "the apikey to use")
+    flag.IntVar(&NotifyDelaySeconds, "nds", 10, "the senconds to delay before notification")
 	flag.Parse()
 
 	if ApiKey == "" {

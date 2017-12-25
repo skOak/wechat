@@ -112,7 +112,7 @@ func UnifiedOrder(w http.ResponseWriter, r *http.Request) {
 	}
 	go func() {
 		// 发送交易结果通知
-		<-time.After(time.Second * 10)
+		<-time.After(time.Second * time.Duration(NotifyDelaySeconds))
 		// Notify client in 10 seconds
 		notify := PayResultNotify{
 			ReturnCode:    "SUCCESS",

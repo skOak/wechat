@@ -30,6 +30,7 @@ type RefundQueryRequest struct {
 
 type RefundQueryResponse struct {
 	XMLName struct{} `xml:"xml" json:"-"`
+	Body    string   `xml:"-" json:"-"` // 返回内容原文，主要是为了记录日志
 
 	// 必选返回
 	TransactionId string       `xml:"transaction_id"` // 微信订单号
@@ -177,6 +178,8 @@ func RefundQuery2(clt *core.Client, req *RefundQueryRequest) (resp *RefundQueryR
 		err = fmt.Errorf("out_trade_no mismatch, have: %s, want: %s", resp.OutTradeNo, req.OutTradeNo)
 		return nil, err
 	}
+	// 返回原文默认用空字符串指向
+	resp.Body = m2[""]
 
 	return resp, nil
 }

@@ -100,6 +100,7 @@ func (req *UnifiedOrderRequest) FieldsMap() map[string]string {
 
 type UnifiedOrderResponse struct {
 	XMLName struct{} `xml:"xml" json:"-"`
+	Body    string   `xml:"-" json:"-"` // 返回内容原文，主要是为了记录日志
 
 	// 必选返回
 	PrepayId  string `xml:"prepay_id"`  // 微信生成的预支付回话标识，用于后续接口调用中使用，该值有效期为2小时
@@ -131,6 +132,7 @@ func UnifiedOrder2(clt *core.Client, req *UnifiedOrderRequest) (resp *UnifiedOrd
 		DeviceInfo: m2["device_info"],
 		CodeURL:    m2["code_url"],
 		MWebURL:    m2["mweb_url"],
+		Body:       m2[""], // 返回原文默认用空字符串指向
 	}
 	return resp, nil
 }

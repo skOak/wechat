@@ -32,7 +32,7 @@ func Sign2(params map[string]string, apiKey string, h hash.Hash) string {
 
 	keys := make([]string, 0, len(params))
 	for k := range params {
-		if k == "sign" {
+		if k == "sign" || k == "" { // ""指向的是原文内容，不参与签名
 			continue
 		}
 		keys = append(keys, k)

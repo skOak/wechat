@@ -25,6 +25,7 @@ type ReverseRequest struct {
 
 type ReverseResponse struct {
 	XMLName struct{} `xml:"xml" json:"-"`
+	Body    string   `xml:"-" json:"-"` // 返回内容原文，主要是为了记录日志
 
 	// 必选返回
 	Recall bool `xml:"recall"` // 是否需要继续调用撤销
@@ -58,5 +59,7 @@ func Reverse2(clt *core.Client, req *ReverseRequest) (resp *ReverseResponse, err
 	if recall := m2["recall"]; recall == "Y" || recall == "y" {
 		resp.Recall = true
 	}
+	// 返回原文默认用空字符串指向
+	resp.Body = m2[""]
 	return resp, nil
 }

@@ -38,6 +38,7 @@ type MicroPayRequest struct {
 
 type MicroPayResponse struct {
 	XMLName struct{} `xml:"xml" json:"-"`
+	Body    string   `xml:"-" json:"-"` // 返回内容原文，主要是为了记录日志
 
 	// 必选返回
 	OpenId        string    `xml:"openid"`         // 用户在商户appid下的唯一标识
@@ -182,5 +183,7 @@ func MicroPay2(clt *core.Client, req *MicroPayRequest) (resp *MicroPayResponse, 
 		err = fmt.Errorf("total_fee mismatch, have: %d, want: %d", resp.TotalFee, req.TotalFee)
 		return nil, err
 	}
+	// 返回原文默认用空字符串指向
+	resp.Body = m2[""]
 	return resp, nil
 }

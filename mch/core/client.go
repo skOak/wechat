@@ -13,6 +13,7 @@ import (
 
 	"gopkg.in/skOak/wechat.v2/internal/debug/mch/api"
 	wechatutil "gopkg.in/skOak/wechat.v2/util"
+	"io/ioutil"
 )
 
 type Client struct {
@@ -166,7 +167,11 @@ func (clt *Client) postXML(url string, body []byte, reqSignType string) (resp ma
 		return nil, true, fmt.Errorf("http.Status: %s", httpResp.Status)
 	}
 
-	resp, err = api.DecodeXMLHttpResponse(httpResp.Body)
+	data, err := ioutil.ReadAll(httpResp.Body)
+	if err != nil {
+		return nil, false, err
+	}
+	resp, err = api.DecodeXMLHttpResponse(bytes.NewReader(data))
 	if err != nil {
 		return nil, false, err
 	}
@@ -263,6 +268,8 @@ func (clt *Client) postXML(url string, body []byte, reqSignType string) (resp ma
 			ErrCodeDesc: resp["err_code_des"],
 		}
 	}
+	// 将Response原文内容，存储在resp的""key中
+	resp[""] = string(data)
 	return resp, false, nil
 }
 

@@ -28,6 +28,7 @@ type OrderQueryRequest struct {
 
 type OrderQueryResponse struct {
 	XMLName struct{} `xml:"xml" json:"-"`
+	Body    string   `xml:"-" json:"-"` // 返回内容原文，主要是为了记录日志
 
 	// 必选返回
 	TradeState     string    `xml:"trade_state"`      // 交易状态
@@ -162,5 +163,7 @@ func OrderQuery2(clt *core.Client, req *OrderQueryRequest) (resp *OrderQueryResp
 			resp.SettlementTotalFee = wechatutil.Int64(n)
 		}
 	}
+	// 返回原文默认用空字符串指向
+	resp.Body = m2[""]
 	return resp, nil
 }

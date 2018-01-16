@@ -16,6 +16,7 @@ func TestSign(t *testing.T) {
 		"device_info": "1000",
 		"body":        "test",
 		"nonce_str":   "ibuaiVcKdpRxkhJA",
+		"":            "这里是原文的内容，不参与sign过程",
 	}
 	apiKey := "192006250b4c09247ec02edce69f6a2d"
 

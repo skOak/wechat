@@ -89,6 +89,10 @@ func DeclareQuery2(clt *core.Client, req *DeclareQueryRequest) (resp *DeclareQue
 	}
 	resp.QueryList = make([]QueryItem, resp.Count)
 	for i := 0; i < resp.Count; i++ {
+		resp.QueryList[i].Customs = m2["customs_"+strconv.Itoa(i)]
+		resp.QueryList[i].State = m2["state_"+strconv.Itoa(i)]
+		resp.QueryList[i].ModifyTime = m2["modify_time_"+strconv.Itoa(i)]
+		resp.QueryList[i].CertCheckResult = m2["cert_check_result_"+strconv.Itoa(i)]
 		resp.QueryList[i].SubOrderNo = m2["sub_order_no_"+strconv.Itoa(i)]
 		resp.QueryList[i].SubOrderId = m2["sub_order_id_"+strconv.Itoa(i)]
 		resp.QueryList[i].MchCustomsNo = m2["mch_customs_no_"+strconv.Itoa(i)]

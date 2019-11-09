@@ -22,6 +22,7 @@ const (
 	OptionForceCheck CheckNameOption = "FORCE_CHECK"
 )
 
+// https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_2
 type TransferRequest struct {
 	XMLName struct{} `xml:"xml" json:"-"`
 
@@ -55,7 +56,7 @@ type TransferResponse struct {
 func Transfer2(clt *core.Client, req *TransferRequest) (resp *TransferResponse, err error) {
 	m1 := make(map[string]string, 8)
 	m1["mch_appid"] = clt.AppId()
-	m1["mch_id"] = clt.MchId()
+	m1["mchid"] = clt.MchId()
 	if req.DeviceInfo != "" {
 		m1["device_info"] = req.DeviceInfo
 	}

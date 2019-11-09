@@ -97,10 +97,10 @@ func NewSubMchClient(appId, mchId, apiKey string, subAppId, subMchId string, htt
 //  err == nil 表示 (return_code == "SUCCESS" && result_code == "SUCCESS").
 func (clt *Client) PostXML(url string, req map[string]string) (resp map[string]string, err error) {
 	url = clt.APIBaseURL() + url
-	if req["appid"] == "" {
+	if req["appid"] == "" && req["mch_appid"] == "" {
 		req["appid"] = clt.appId
 	}
-	if req["mch_id"] == "" {
+	if req["mch_id"] == "" && req["mchid"] == "" {
 		req["mch_id"] = clt.mchId
 	}
 	if clt.subAppId != "" && req["sub_appid"] == "" {

@@ -18,16 +18,18 @@ type QueryContractRequest struct {
 	ContractId   string `xml:"contract_id"`   // 委托代扣签约成功后微信返回的委托代扣协议id
 	PlanId       int64  `xml:"plan_id"`       // 协议模板id
 	ContractCode string `xml:"contract_code"` // 签约协议号
+	// Version      string `xml:"version"`       // 固定值1.0
 }
 
 func (req *QueryContractRequest) FieldsMap() map[string]string {
-	m1 := make(map[string]string, 24)
+	m1 := make(map[string]string, 4)
 	if req.ContractId != "" {
 		m1["contract_id"] = req.ContractId
 	} else {
 		m1["plan_id"] = strconv.FormatInt(req.PlanId, 10)
 		m1["contract_code"] = req.ContractCode
 	}
+	m1["version"] = "1.0"
 
 	return m1
 }

@@ -27,8 +27,6 @@ type PayApplyRequest struct {
 
 	// 签约相关
 	ContractId    string `xml:"contract_id"`    // 委托代扣签约成功后微信返回的委托代扣协议id
-	ContractCode  string `xml:"contract_code"`  // 签约协议号
-	RequestSerial int64  `xml:"request_serial"` // 商户请求签约时的序列号，要求唯一性。序列号主要用于排序，不作为查询条件。
 
 	// 可选参数
 	NonceStr   string    `xml:"nonce_str"`  // 随机字符串，不长于32位。NOTE: 如果为空则系统会自动生成一个随机字符串。
@@ -50,7 +48,6 @@ func (req *PayApplyRequest) FieldsMap() map[string]string {
 	m1["notify_url"] = req.NotifyURL
 	m1["trade_type"] = req.TradeType
 	m1["contract_id"] = req.ContractId
-	m1["request_serial"] = strconv.FormatInt(req.RequestSerial, 10)
 	if req.NonceStr != "" {
 		m1["nonce_str"] = req.NonceStr
 	} else {

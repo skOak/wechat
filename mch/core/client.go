@@ -6,14 +6,13 @@ import (
 	"crypto/md5"
 	"crypto/sha256"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"strings"
 
 	"github.com/chanxuehong/util"
-
 	"gopkg.in/skOak/wechat.v2/internal/debug/mch/api"
 	wechatutil "gopkg.in/skOak/wechat.v2/util"
-	"io/ioutil"
 )
 
 type Client struct {
@@ -185,6 +184,13 @@ func (clt *Client) postXML(url string, body []byte, reqSignType string) (resp ma
 		return nil, false, &Error{
 			ReturnCode: returnCode,
 			ReturnMsg:  resp["return_msg"],
+		}
+	}
+
+	// 验证处理逻辑是否成功,如果是系统超时错误，返回要求原参数重试
+	if resultCode, ok := resp["result_code"]; ok && resultCode != ResultCodeSuccess {
+		if errCode, ok := resp["err_code"]; ok && errCode == ErrCodeSystemError {
+			return nil, true, fmt.Errorf("ReturnCode Ok, But Error: %v.", ErrCodeSystemError)
 		}
 	}
 
